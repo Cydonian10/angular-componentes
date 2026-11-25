@@ -8,6 +8,10 @@
   </button>
   <app-input label="Bienvenidos" size="md" type="password" />
   <button appButton type="button" size="md" variant="soft">Hola mundo</button>
+  <div class="mt-6">
+    <app-dropdown [items]="dropdownItems" (selected)="selectedAction.set($event)" />
+    @if (selectedAction()) { <p class="mt-2 text-sm text-base-content/70">Acción seleccionada: {{ selectedAction() }}</p> }
+  </div>
   <div class="mt-6 grid max-w-sm gap-4 rounded-2xl bg-base-100 p-4">
     <article appCard>
       <header appCardHeader>
