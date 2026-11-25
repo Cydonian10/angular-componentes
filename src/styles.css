@@ -1,3 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
-
+@import '@fontsource/fredoka/300.css';
+@import '@fontsource/fredoka/400.css';
+@import '@fontsource/fredoka/500.css';
+@import '@fontsource/fredoka/600.css';
 @import 'tailwindcss';
+
+@theme inline {
+  --color-base-100: var(--theme-base-100);
+  --color-base-200: var(--theme-base-200);
+  --color-base-300: var(--theme-base-300);
+  --color-base-content: var(--theme-base-content);
+  --color-primary: var(--theme-primary);
+  --color-primary-content: var(--theme-primary-content);
+  --color-secondary: var(--theme-secondary);
+  --color-secondary-content: var(--theme-secondary-content);
+  --color-accent: var(--theme-primary);
+  --color-accent-content: var(--theme-primary-content);
+  --color-neutral: var(--theme-neutral);
+  --color-neutral-content: var(--theme-neutral-content);
+  --color-info: var(--theme-info);
+  --color-info-content: var(--theme-info-content);
+  --color-success: var(--theme-success);
+  --color-success-content: var(--theme-success-content);
+  --color-warning: var(--theme-warning);
+  --color-warning-content: var(--theme-warning-content);
+  --color-error: var(--theme-error);
+  --color-error-content: var(--theme-error-content);
+}
+
+:root, [data-theme='vasquez-dark'] {
+  color-scheme: dark;
+  --theme-base-100: #1e2124;
+  --theme-base-200: #2c2f33;
+  --theme-base-300: #36393e;
+  --theme-base-content: #f2f3f5;
+  --theme-primary: #5865f2;
+  --theme-primary-content: #ffffff;
+  --theme-secondary: #7983f5;
+  --theme-secondary-content: #141637;
+  --theme-neutral: #424549;
+  --theme-neutral-content: #f2f3f5;
+  --theme-info: #60a5fa;
+  --theme-info-content: #08111f;
+  --theme-success: #57f287;
+  --theme-success-content: #102719;
+  --theme-warning: #fee75c;
+  --theme-warning-content: #302900;
+  --theme-error: #ed4245;
+  --theme-error-content: #200607;
+}
+
+[data-theme='vasquez-light'] {
+  color-scheme: light;
+  --theme-base-100: #ffffff;
+  --theme-base-200: #f2f3f5;
+  --theme-base-300: #e3e5e8;
+  --theme-base-content: #232428;
+  --theme-primary: #5865f2;
+  --theme-primary-content: #ffffff;
+  --theme-secondary: #7983f5;
+  --theme-secondary-content: #141637;
+  --theme-neutral: #d5d8dd;
+  --theme-neutral-content: #232428;
+  --theme-info: #60a5fa;
+  --theme-info-content: #08111f;
+  --theme-success: #57f287;
+  --theme-success-content: #102719;
+  --theme-warning: #fee75c;
+  --theme-warning-content: #302900;
+  --theme-error: #ed4245;
+  --theme-error-content: #200607;
+}
+
+body { margin: 0; font-family: 'Fredoka', sans-serif; }

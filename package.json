@@ -20,6 +20,9 @@
     "@angular/platform-server": "^22.3.0",
     "@angular/router": "^22.3.0",
     "@angular/ssr": "^22.3.0",
+    "@fontsource/fredoka": "^5.3.0",
+    "@tanstack/angular-query": "^5.108.4",
+    "@tanstack/angular-query-devtools": "^5.108.4",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
