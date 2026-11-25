@@ -8,5 +8,28 @@
   </button>
   <app-input label="Bienvenidos" size="md" type="password" />
   <button appButton type="button" size="md" variant="soft">Hola mundo</button>
+  <div class="mt-6 grid max-w-sm gap-4 rounded-2xl bg-base-100 p-4">
+    <article appCard>
+      <header appCardHeader>
+        <h2 appCardTitle>Default</h2>
+        <p appCardDescription>Superficie principal</p>
+      </header>
+      <div appCardContent>Una tarjeta para contenido general.</div>
+    </article>
+    <article appCard variant="secondary">
+      <header appCardHeader>
+        <h2 appCardTitle>Secondary</h2>
+        <p appCardDescription>Superficie secundaria</p>
+      </header>
+      <div appCardContent>Para destacar contenido de forma sutil.</div>
+    </article>
+    <article appCard variant="tertiary">
+      <header appCardHeader>
+        <h2 appCardTitle>Tertiary</h2>
+        <p appCardDescription>Superficie terciaria</p>
+      </header>
+      <div appCardContent>Para contenido con mayor énfasis.</div>
+    </article>
+  </div>
   <router-outlet />
 </div>
