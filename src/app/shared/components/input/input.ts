@@ -4,8 +4,10 @@ import {
   Component,
   input,
   model,
+  output,
   signal,
 } from '@angular/core';
+import { FormValueControl } from '@angular/forms/signals';
 import { LucideEye, LucideEyeOff } from '@lucide/angular';
 
 type InputType =
@@ -17,7 +19,7 @@ type InputType =
   templateUrl: './input.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Input {
+export class Input implements FormValueControl<string> {
   readonly label = input.required<string>();
   readonly type = input<InputType>('text');
   readonly size = input<'sm' | 'md' | 'lg'>('md');
@@ -28,5 +30,6 @@ export class Input {
   readonly required = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly value = model('');
+  readonly touch = output<void>();
   protected readonly showPassword = signal(false);
 }

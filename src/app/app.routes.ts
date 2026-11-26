@@ -1,3 +1,5 @@
+import { PostsPage } from './pages/posts/posts';
+import { Demo } from './demo';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Routes } from '@angular/router';
 
@@ -13,6 +15,9 @@ class DemoPage {
 }
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'publicaciones' },
+  { path: 'publicaciones', component: PostsPage, title: 'Publicaciones' },
+  { path: 'demo', component: Demo, title: 'Demostración' },
   ...[
     ['mesas', 'Mesas y zonas'],
     ['productos', 'Productos'],

@@ -1,0 +1,56 @@
+<section class="mt-8 max-w-6xl" aria-labelledby="posts-title">
+  <h1 id="posts-title" class="text-2xl font-semibold">Publicaciones</h1>
+  <p class="mt-2 text-base-content/70">Consulta y crea publicaciones de ejemplo.</p>
+
+  <form
+    novalidate
+    class="my-6 grid max-w-xl gap-4 rounded-xl bg-base-200 p-5"
+    (submit)="$event.preventDefault(); create()"
+  >
+    <h2 class="text-lg font-medium">Nueva publicación</h2>
+    <app-input label="Título" [formField]="postForm.title" />
+    @if (postForm.title().touched() && postForm.title().invalid()) {
+      <p class="text-sm text-error" role="alert">{{ postForm.title().errors()[0].message }}</p>
+    }
+    <app-input label="Contenido" [formField]="postForm.body" />
+    @if (postForm.body().touched() && postForm.body().invalid()) {
+      <p class="text-sm text-error" role="alert">{{ postForm.body().errors()[0].message }}</p>
+    }
+    <app-input label="ID de usuario" type="number" [formField]="postForm.userId" />
+    @if (postForm.userId().touched() && postForm.userId().invalid()) {
+      <p class="text-sm text-error" role="alert">{{ postForm.userId().errors()[0].message }}</p>
+    }
+    <div>
+      <button appButton type="submit" [disabled]="mutation.isPending()">
+        {{ mutation.isPending() ? 'Guardando…' : 'Crear publicación' }}
+      </button>
+    </div>
+    @if (mutation.isError()) {
+      <p role="alert" class="text-error">No se pudo crear la publicación. Inténtalo de nuevo.</p>
+    }
+    @if (mutation.isSuccess()) {
+      <p role="status" class="text-success">
+        Publicación creada para esta sesión. JSONPlaceholder no guarda los cambios.
+      </p>
+    }
+  </form>
+
+  @if (query.isError()) {
+    <p role="alert" class="mb-3 text-error">
+      No se pudieron cargar las publicaciones.
+      <button type="button" class="underline" (click)="query.refetch()">Reintentar</button>
+    </p>
+  }
+  <app-table [columns]="columns" [rows]="rows()" [loading]="query.isPending()" />
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+    <p class="text-sm text-base-content/60" aria-live="polite">
+      {{ posts().length }} registros · Página {{ page() }} de {{ totalPages() || 1 }}
+    </p>
+    <app-pagination
+      [page]="page()"
+      [totalPages]="totalPages()"
+      [disabled]="query.isPending()"
+      (pageChange)="page.set($event)"
+    />
+  </div>
+</section>

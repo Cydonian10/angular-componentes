@@ -19,6 +19,7 @@
       [required]="required()"
       [value]="value()"
       (input)="value.set($any($event.target).value)"
+      (blur)="touch.emit()"
     />
     @if (type() === 'password') {
       <button
