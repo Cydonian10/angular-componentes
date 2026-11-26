@@ -32,6 +32,46 @@
         <div appCardContent>Para destacar contenido de forma sutil.</div>
       </article>
     </div>
+    <section class="mt-8 max-w-2xl rounded-2xl bg-base-200/40 p-5" aria-labelledby="select-demo-title">
+      <h2 id="select-demo-title" class="text-xl font-medium">Selectores con búsqueda</h2>
+      <p class="mt-1 text-sm text-base-content/60">Elige una o varias categorías.</p>
+      <form class="mt-5 grid gap-5" (submit)="$event.preventDefault(); saveSelections()">
+        <app-search-select id="category" label="Categoría" [options]="selectOptions" [formField]="selectForm.category" />
+        <app-search-select id="favorites" label="Categorías favoritas" [options]="selectOptions" [multiple]="true" [formField]="selectForm.favorites" />
+        <div><button appButton type="submit" variant="soft">Guardar selección</button></div>
+        @if (selectSubmitted()) { <p class="text-sm text-success" role="status">Selección guardada en el formulario de ejemplo.</p> }
+      </form>
+    </section>
+    <section class="mt-8 max-w-4xl rounded-2xl bg-base-100 pb-8" aria-labelledby="products-title">
+      <div class="mb-5">
+        <h2 id="products-title" class="text-xl font-medium">Productos</h2>
+        <p class="mt-1 text-sm text-base-content/60">
+          Ejemplo de datos paginados desde un servicio simulado.
+        </p>
+      </div>
+      @if (error()) {
+        <p role="alert" class="mb-3 text-error">
+          No se pudieron cargar los datos.
+          <button class="underline" type="button" (click)="loadPage(page())">Reintentar</button>
+        </p>
+      }
+      <app-table [columns]="columns" [rows]="rows()" [loading]="loading()" />
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-base-content/60" aria-live="polite">
+          {{
+            loading()
+              ? 'Cargando…'
+              : total() + ' registros · Página ' + page() + ' de ' + totalPages()
+          }}
+        </p>
+        <app-pagination
+          [page]="page()"
+          [totalPages]="totalPages()"
+          [disabled]="loading()"
+          (pageChange)="loadPage($event)"
+        />
+      </div>
+    </section>
     <router-outlet />
   </main>
 </div>

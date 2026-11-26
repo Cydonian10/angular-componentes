@@ -6,12 +6,14 @@ import {
   model,
   signal,
 } from '@angular/core';
+import { LucideEye, LucideEyeOff } from '@lucide/angular';
 
 type InputType =
   'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'time';
 
 @Component({
   selector: 'app-input',
+  imports: [LucideEye, LucideEyeOff],
   templateUrl: './input.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

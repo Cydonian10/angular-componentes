@@ -1,0 +1,91 @@
+<div class="relative" (focusout)="onFocusOut($event)">
+  <label [for]="id()" class="mb-2 block text-sm font-medium text-base-content/80"
+    >{{ label() }}
+    @if (required()) {
+      <span aria-hidden="true" class="text-error">*</span>
+    }
+  </label>
+  <div
+    class="flex min-h-11 flex-wrap items-center gap-1.5 rounded-xl bg-base-200 px-3 py-2 outline-1 -outline-offset-1 outline-base-content/15 focus-within:outline-2 focus-within:outline-primary"
+    [class.opacity-50]="disabled()"
+    [class.outline-error]="invalid() && touched()"
+  >
+    @for (option of selectedOptions().slice(0, 3); track option.value) {
+      <span
+        class="flex max-w-36 items-center gap-1 rounded-lg bg-primary/15 px-2 py-1 text-sm text-base-content"
+      >
+        <span class="truncate">{{ option.label }}</span>
+        <button
+          type="button"
+          class="shrink-0 rounded px-1 hover:bg-base-300 focus-visible:outline-2 focus-visible:outline-primary"
+          [disabled]="disabled()"
+          [attr.aria-label]="'Quitar ' + option.label"
+          (click)="$event.stopPropagation(); remove(option.value)"
+        >
+          ×
+        </button>
+      </span>
+    }
+    @if (selectedOptions().length > 3) {
+      <span
+        class="rounded-lg bg-base-300 px-2 py-1 text-sm"
+        [attr.aria-label]="selectedOptions().length - 3 + ' selecciones adicionales'"
+        >+{{ selectedOptions().length - 3 }}</span
+      >
+    }
+    <input
+      ngCombobox
+      #combo="ngCombobox"
+      [id]="id()"
+      [(value)]="query"
+      [(expanded)]="expanded"
+      (click)="expanded.set(true)"
+      [disabled]="disabled()"
+      [placeholder]="selected().length ? 'Buscar…' : placeholder()"
+      [attr.aria-required]="required()"
+      [attr.aria-invalid]="invalid() && touched()"
+      [attr.aria-describedby]="invalid() && touched() ? id() + '-error' : null"
+      class="min-w-20 flex-1 bg-transparent text-sm text-base-content outline-none placeholder:text-base-content/50"
+    />
+    <span aria-hidden="true" class="text-base-content/50">⌄</span>
+  </div>
+  <ng-template ngComboboxPopup [combobox]="combo">
+    <div
+      class="absolute z-50 mt-2 w-full overflow-hidden rounded-xl bg-base-200 shadow-xl outline-1 outline-base-content/10"
+    >
+      <ul
+        ngComboboxWidget
+        ngListbox
+        #listbox="ngListbox"
+        [multi]="multiple()"
+        selectionMode="explicit"
+        [value]="selected()"
+        (valueChange)="update($event)"
+        [activeDescendant]="listbox.activeDescendant()"
+        class="max-h-60 overflow-auto p-1.5"
+      >
+        @for (option of filtered(); track option.value) {
+          <li
+            ngOption
+            [value]="option.value"
+            [label]="option.label"
+            [disabled]="!!option.disabled"
+            class="cursor-pointer rounded-lg px-3 py-2 text-sm outline-none hover:bg-base-300 aria-selected:bg-primary/15 aria-selected:text-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-40"
+          >
+            {{ option.label }}
+          </li>
+        }
+      </ul>
+      @if (!filtered().length) {
+        <p class="px-4 py-3 text-sm text-base-content/60">No se encontraron opciones.</p>
+      }
+    </div>
+  </ng-template>
+  @if (invalid() && touched()) {
+    <div [id]="id() + '-error'" class="mt-1.5 text-sm text-error" role="alert">
+      @for (error of errors(); track $index) {
+        <p>{{ error.message }}</p>
+      }
+    </div>
+  }
+</div>

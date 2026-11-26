@@ -1,0 +1,58 @@
+import { TestBed } from '@angular/core/testing';
+import { SearchSelect } from './search-select';
+
+describe('SearchSelect', () => {
+  it('opens on click, selects multiple options and removes a selection', async () => {
+    const fixture = TestBed.createComponent(SearchSelect);
+    fixture.componentRef.setInput('id', 'test-select');
+    fixture.componentRef.setInput('label', 'Categorías');
+    fixture.componentRef.setInput('multiple', true);
+    fixture.componentRef.setInput('value', []);
+    fixture.componentRef.setInput('options', Array.from({length: 6}, (_, i) => ({value: String(i), label: `Opción ${i}`})));
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    root.querySelector('input')!.click();
+    await fixture.whenStable();
+    let options = root.querySelectorAll<HTMLElement>('[role="option"]');
+    expect(options.length).toBe(6);
+    options[0].click();
+    await fixture.whenStable();
+    options = root.querySelectorAll<HTMLElement>('[role="option"]');
+    options[1].click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.value()).toEqual(['0', '1']);
+    const input = root.querySelector('input')!;
+    input.value = 'Opción 4';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.value()).toEqual(['0', '1']);
+    expect(root.textContent).toContain('Opción 0');
+    expect(input.value).toBe('Opción 4');
+    expect(root.querySelector<HTMLElement>('[role="option"]:not([hidden])')!.textContent).toContain('Opción 4');
+    root.querySelector<HTMLElement>('[role="option"]:not([hidden])')!.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.value()).toEqual(['0', '1', '4']);
+    root.querySelector<HTMLButtonElement>('[aria-label="Quitar Opción 0"]')!.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.value()).toEqual(['1', '4']);
+  });
+  it('keeps a single selection when the search has no matches', async () => {
+    const fixture = TestBed.createComponent(SearchSelect);
+    fixture.componentRef.setInput('id', 'single');
+    fixture.componentRef.setInput('label', 'Categoría');
+    fixture.componentRef.setInput('options', [{ value: 'a', label: 'Alimentos' }, { value: 'b', label: 'Bebidas' }]);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const input = root.querySelector('input')!;
+    input.click();
+    await fixture.whenStable();
+    root.querySelector<HTMLElement>('[role="option"]')!.click();
+    await fixture.whenStable();
+    input.value = 'xyz';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.value()).toBe('a');
+    expect(root.textContent).toContain('Alimentos');
+    expect(root.textContent).toContain('No se encontraron opciones.');
+  });
+});

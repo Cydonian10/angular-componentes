@@ -1,6 +1,6 @@
 <fieldset class="min-w-0 border-0 p-0 disabled:opacity-50" [disabled]="disabled()">
   <legend class="mb-2 px-0 text-sm font-medium text-base-content/80">{{ label() }}</legend>
-  <div class="flex items-center gap-2">
+  <div class="relative flex items-center">
     <input
       class="w-full rounded-xl bg-base-200 text-base-content outline-1 -outline-offset-1 outline-base-content/15 transition-colors placeholder:text-base-content/50 hover:outline-base-content/35 focus:outline-2 focus:outline-primary"
       [class.px-3]="size() === 'sm'"
@@ -10,6 +10,7 @@
       [class.py-2]="size() === 'md'"
       [class.py-3.5]="size() === 'lg'"
       [class.text-base]="size() !== 'sm'"
+      [class.pr-12]="type() === 'password'"
       [type]="type() === 'password' && showPassword() ? 'text' : type()"
       [attr.aria-label]="label()"
       [attr.name]="name() || null"
@@ -22,12 +23,16 @@
     @if (type() === 'password') {
       <button
         type="button"
-        class="rounded-lg px-3 py-2 text-sm hover:bg-base-300 focus-visible:outline-2 focus-visible:outline-primary"
+        class="absolute right-2 flex h-9 w-9 items-center justify-center rounded-lg text-base-content/70 transition-colors hover:bg-base-300 hover:text-base-content focus-visible:outline-2 focus-visible:outline-primary"
         [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
         [attr.aria-pressed]="showPassword()"
         (click)="showPassword.set(!showPassword())"
       >
-        {{ showPassword() ? 'Ocultar' : 'Mostrar' }}
+        @if (showPassword()) {
+          <svg lucideEyeOff [size]="18" aria-hidden="true"></svg>
+        } @else {
+          <svg lucideEye [size]="18" aria-hidden="true"></svg>
+        }
       </button>
     }
   </div>
