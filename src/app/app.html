@@ -1,39 +1,38 @@
-<div class="min-h-screen bg-base-100 p-10 text-base-content" [attr.data-theme]="theme()">
-  <button
-    type="button"
-    class="mb-6 rounded-lg bg-primary px-4 py-2 font-medium text-primary-content hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-    (click)="toggleTheme()"
-  >
-    Cambiar a tema {{ theme() === 'vasquez-dark' ? 'claro' : 'oscuro' }}
-  </button>
-  <app-input label="Bienvenidos" size="md" type="password" />
-  <button appButton type="button" size="md" variant="soft">Hola mundo</button>
-  <div class="mt-6">
-    <app-dropdown [items]="dropdownItems" (selected)="selectedAction.set($event)" />
-    @if (selectedAction()) { <p class="mt-2 text-sm text-base-content/70">Acción seleccionada: {{ selectedAction() }}</p> }
-  </div>
-  <div class="mt-6 grid max-w-sm gap-4 rounded-2xl bg-base-100 p-4">
-    <article appCard>
-      <header appCardHeader>
-        <h2 appCardTitle>Default</h2>
-        <p appCardDescription>Superficie principal</p>
-      </header>
-      <div appCardContent>Una tarjeta para contenido general.</div>
-    </article>
-    <article appCard variant="secondary">
-      <header appCardHeader>
-        <h2 appCardTitle>Secondary</h2>
-        <p appCardDescription>Superficie secundaria</p>
-      </header>
-      <div appCardContent>Para destacar contenido de forma sutil.</div>
-    </article>
-    <article appCard variant="tertiary">
-      <header appCardHeader>
-        <h2 appCardTitle>Tertiary</h2>
-        <p appCardDescription>Superficie terciaria</p>
-      </header>
-      <div appCardContent>Para contenido con mayor énfasis.</div>
-    </article>
-  </div>
-  <router-outlet />
+<div class="min-h-screen bg-base-100 text-base-content" [attr.data-theme]="theme()">
+  <app-sidebar [sections]="sidebarSections" />
+  <main class="demo-content">
+    <button
+      type="button"
+      class="mb-6 rounded-lg bg-primary px-4 py-2 font-medium text-primary-content hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      (click)="toggleTheme()"
+    >
+      Cambiar a tema {{ theme() === 'vasquez-dark' ? 'claro' : 'oscuro' }}
+    </button>
+    <app-input label="Bienvenidos" size="md" type="password" />
+    <button appButton type="button" size="md" variant="soft">Hola mundo</button>
+    <div class="mt-6">
+      <app-dropdown [items]="dropdownItems" (selected)="selectedAction.set($event)" />
+      @if (selectedAction()) {
+        <p class="mt-2 text-sm text-base-content/70">Acción seleccionada: {{ selectedAction() }}</p>
+      }
+    </div>
+    <div class="mt-6 grid max-w-sm gap-4 rounded-2xl bg-base-100 p-4">
+      <article appCard>
+        <header appCardHeader>
+          <h2 appCardTitle>Default</h2>
+          <p appCardDescription>Superficie principal</p>
+        </header>
+        <div appCardContent>Una tarjeta para contenido general.</div>
+      </article>
+      <article appCard variant="secondary">
+        <header appCardHeader>
+          <h2 appCardTitle>Secondary</h2>
+          <p appCardDescription>Superficie secundaria</p>
+        </header>
+        <div appCardContent>Para destacar contenido de forma sutil.</div>
+      </article>
+    </div>
+    <router-outlet />
+  </main>
 </div>
+<!-- code --install-extension fabiospampinato.vscode-highlight -->
